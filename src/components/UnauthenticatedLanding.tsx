@@ -1,6 +1,12 @@
 import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import PublicUsersList, { PublicUser } from './PublicUsersList';
 
 export default function UnauthenticatedLanding() {
+  const router = useRouter();
+  const handleSelectUser = (user: PublicUser) => {
+    router.push(`/public/${user.id}`);
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-blue-100">
       {/* Hero Section */}
@@ -20,7 +26,7 @@ export default function UnauthenticatedLanding() {
               {/* Left Column - Features & Benefits */}
               <div className="space-y-8">
                 <div className="text-center lg:text-left">
-                  <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+                  <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 tracking-tight leading-none">
                     StockZenith
                   </h1>
                   <p className="text-2xl text-blue-700 font-semibold mb-2">Smart Portfolio Management</p>
@@ -232,6 +238,10 @@ export default function UnauthenticatedLanding() {
             </div>
           </div>
         </div>
+      </div>
+      {/* Public Users/Portfolios List */}
+      <div className="bg-white/40 backdrop-blur-sm border-t border-white/50 py-12">
+        <PublicUsersList onSelect={handleSelectUser} />
       </div>
     </div>
   );

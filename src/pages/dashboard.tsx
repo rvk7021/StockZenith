@@ -5,6 +5,7 @@ import PortfolioGrid from '../components/PortfolioGrid';
 import PortfolioOverviewAnalytics from '../components/PortfolioOverviewAnalytics';
 import PortfolioDashboardAIInsights from '../components/PortfolioDashboardAIInsights';
 import { useRouter } from 'next/router';
+import PublicUsersList, { PublicUser } from '../components/PublicUsersList';
 
 export interface Lot {
   id?: string;
@@ -167,7 +168,7 @@ export default function Dashboard() {
               </svg>
             </div>
             <div>
-              <h1 className="text-3xl sm:text-4xl font-extrabold text-blue-900 mb-1 tracking-wide leading-tight">StockZenith</h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 tracking-tight leading-none">StockZenith</h1>
               <p className="text-blue-400 font-medium">Manage and track your investments</p>
             </div>
           </div>
@@ -195,12 +196,18 @@ export default function Dashboard() {
 
         {/* Portfolio Grid */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow p-4 sm:p-8 mb-8">
-        <PortfolioGrid
-          portfolios={portfolios}
-          loading={loading}
-          handleNew={handleNew}
+          <PortfolioGrid
+            portfolios={portfolios}
+            loading={loading}
+            handleNew={handleNew}
             prices={prices}
           />
+        </div>
+
+        {/* Public Portfolios Explorer */}
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow p-4 sm:p-8 mb-8">
+          <h2 className="text-2xl font-bold mb-6 text-blue-900">Explore Public Portfolios</h2>
+          <PublicUsersList onSelect={(user: PublicUser) => router.push(`/public/${user.id}`)} />
         </div>
 
         {/* Portfolio Overview Analytics */}
