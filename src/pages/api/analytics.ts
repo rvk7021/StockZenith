@@ -3,6 +3,13 @@ import { getServerSession } from 'next-auth/next';
 import { prisma } from '@/lib/prisma';
 import { authOptions } from './auth/[...nextauth]';
 
+type Viewer = { viewerId?: string | null; ipAddress?: string | null; createdAt: Date };
+type SharedLink = {
+  token: string;
+  portfolio: { name: string };
+  viewers: Viewer[];
+};
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const session = await getServerSession(req, res, authOptions);
   if (!session || !session.user?.email) {
@@ -18,11 +25,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   });
 
   // For each, count total and unique viewers (by IP or viewerId)
-  const analytics = sharedLinks.map((link: any) => ({
+  const analytics = sharedLinks.map((link: SharedLink) => ({
     token: link.token,
     portfolioName: link.portfolio.name,
     viewCount: link.viewers.length,
-    uniqueViewers: new Set(link.viewers.map((v: any) => v.viewerId || v.ipAddress)).size,
+    uniqueViewers: new Set(link.viewers.map((v: Viewer) => v.viewerId || v.ipAddress)).size,
     lastViewed: link.viewers.length > 0 ? link.viewers[link.viewers.length - 1].createdAt : null,
     link: `/portfolio/${link.token}`,
   }));

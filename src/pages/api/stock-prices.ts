@@ -11,6 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const prices = await fetchStockPrices(tickers);
     return res.json({ prices });
   } catch (e) {
-    return res.status(500).json({ error: 'Failed to fetch prices', details: (e as any).message });
+    return res.status(500).json({ error: 'Failed to fetch prices', details: (e as unknown as Error).message });
   }
 } 

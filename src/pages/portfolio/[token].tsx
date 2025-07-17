@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { TrendingUp, TrendingDown, DollarSign, PieChart, Activity, MessageCircle, Search, RefreshCw, AlertCircle, Eye, Users, Lock, Globe, Wallet, BarChart3, Brain, Sparkles, Send, ChevronDown, ChevronUp, Calendar as CalendarIcon } from 'lucide-react';
+import { useEffect, useState, useCallback } from 'react';
+import { TrendingUp, TrendingDown, DollarSign, PieChart, Activity, MessageCircle, Search, RefreshCw, AlertCircle, Eye, Users, Lock, Globe, Wallet, BarChart3, Brain, Sparkles, ChevronDown, ChevronUp, Calendar as CalendarIcon } from 'lucide-react';
 import { useRef } from 'react';
 import ChatbotSection from '../../components/ChatbotSection';
 
@@ -26,6 +26,12 @@ interface Shared {
   token: string;
   revoked: boolean;
 }
+
+const SECTOR_MAP: Record<string, string> = {
+  AAPL: 'Technology', MSFT: 'Technology', GOOGL: 'Technology', AMZN: 'Consumer Discretionary', TSLA: 'Consumer Discretionary',
+  JPM: 'Financials', V: 'Financials', JNJ: 'Healthcare', UNH: 'Healthcare', XOM: 'Energy', CVX: 'Energy',
+  META: 'Communication Services', NVDA: 'Technology', WMT: 'Consumer Staples', PG: 'Consumer Staples',
+};
 
 export default function SharedPortfolio() {
   const router = useRouter();
@@ -422,11 +428,12 @@ function PortfolioSummary({ lots, cash }: { lots: Lot[]; cash: number }) {
         });
         const data = await res.json();
         setPrices(data.prices || {});
-        if (data.error || Object.values(data.prices || {}).every((v: any) => v === null)) {
+        if (data.error || Object.values(data.prices || {}).every((v) => v === null)) {
           setError('Stock prices unavailable or rate limit reached.');
         }
       } catch (err) {
         setError('Failed to fetch stock prices');
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -681,17 +688,7 @@ function InsightsSection({ portfolio }: { portfolio: Portfolio }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  useEffect(() => {
-    generateInsights();
-  }, [portfolio]);
-
-  const SECTOR_MAP: Record<string, string> = {
-    AAPL: 'Technology', MSFT: 'Technology', GOOGL: 'Technology', AMZN: 'Consumer Discretionary', TSLA: 'Consumer Discretionary',
-    JPM: 'Financials', V: 'Financials', JNJ: 'Healthcare', UNH: 'Healthcare', XOM: 'Energy', CVX: 'Energy',
-    META: 'Communication Services', NVDA: 'Technology', WMT: 'Consumer Staples', PG: 'Consumer Staples',
-  };
-
-  const generateInsights = () => {
+  const generateInsights = useCallback(() => {
     setLoading(true);
     setError('');
     setTimeout(() => {
@@ -733,8 +730,8 @@ function InsightsSection({ portfolio }: { portfolio: Portfolio }) {
       });
 
       // Top gainers/losers (simulate, as we don't have current prices here)
-      const gainers = holdingEntries.slice(0, 2).map(([ticker, value]) => ticker);
-      const losers = holdingEntries.slice(-2).map(([ticker, value]) => ticker);
+      const gainers = holdingEntries.slice(0, 2).map(([ticker, ]) => ticker);
+      const losers = holdingEntries.slice(-2).map(([ticker, ]) => ticker);
 
       // Cash to equity ratio
       const equity = totalInvestment;
@@ -763,7 +760,11 @@ function InsightsSection({ portfolio }: { portfolio: Portfolio }) {
       });
       setLoading(false);
     }, 2000);
-  };
+  }, [portfolio]);
+
+  useEffect(() => {
+    generateInsights();
+  }, [generateInsights]);
 
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden">

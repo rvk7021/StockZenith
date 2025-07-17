@@ -1,5 +1,7 @@
 import { Share2, CheckCircle, Home, Eye, EyeOff, Users, Lock } from 'lucide-react';
 import React from 'react';
+import type { Portfolio } from '../pages/dashboard';
+import Link from 'next/link';
 
 export default function PortfolioDetailHeader({
   portfolio,
@@ -13,10 +15,9 @@ export default function PortfolioDetailHeader({
   onEdit,
   onDelete,
   onCopy,
-  setShowShareLinkInline,
-  getVisibilityIcon,
+
 }: {
-  portfolio: any;
+  portfolio: Portfolio;
   shareLink: string | null;
   shareLoading: boolean;
   shareError: string;
@@ -51,15 +52,14 @@ export default function PortfolioDetailHeader({
         {/* Top Navigation Bar */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-4 border-b border-gray-100">
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <a 
-              href="/dashboard"
-              className="flex items-center space-x-2 text-indigo-600 hover:text-indigo-700 transition-colors group"
-            >
-              <div className="p-1.5 sm:p-2 rounded-lg bg-indigo-50 group-hover:bg-indigo-100 transition-colors">
-                <Home className="w-4 h-4 sm:w-5 sm:h-5" />
+            <Link href="/dashboard">
+              <div className="flex items-center space-x-2 text-indigo-600 hover:text-indigo-700 transition-colors group">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-indigo-50 group-hover:bg-indigo-100 transition-colors">
+                  <Home className="w-4 h-4 sm:w-5 sm:h-5" />
+                </div>
+                <span className="font-semibold text-xs sm:text-sm">Dashboard</span>
               </div>
-              <span className="font-semibold text-xs sm:text-sm">Dashboard</span>
-            </a>
+            </Link>
             <div className="text-gray-400 hidden sm:block">/</div>
             <span className="text-gray-600 font-medium text-xs sm:text-sm hidden sm:block">Portfolio Details</span>
           </div>
@@ -144,14 +144,14 @@ export default function PortfolioDetailHeader({
 
                   {/* Visibility Card */}
                   <div className={`bg-gradient-to-r ${
-                    portfolio.visibility === 'private' ? 'from-gray-50 to-gray-100 border-gray-200' :
-                    portfolio.visibility === 'public' ? 'from-blue-50 to-blue-100 border-blue-200' :
+                    portfolio.visibility === 'PRIVATE' ? 'from-gray-50 to-gray-100 border-gray-200' :
+                    portfolio.visibility === 'PUBLIC' ? 'from-blue-50 to-blue-100 border-blue-200' :
                     'from-purple-50 to-purple-100 border-purple-200'
                   } border rounded-xl p-4 sm:p-5 sm:col-span-2 lg:col-span-1`}>
                     <div className="flex items-center space-x-3">
                       <div className={`p-2 rounded-lg ${
-                        portfolio.visibility === 'private' ? 'bg-gray-500' :
-                        portfolio.visibility === 'public' ? 'bg-blue-500' :
+                        portfolio.visibility === 'PRIVATE' ? 'bg-gray-500' :
+                        portfolio.visibility === 'PUBLIC' ? 'bg-blue-500' :
                         'bg-purple-500'
                       }`}>
                         <span className="text-white">
@@ -160,13 +160,13 @@ export default function PortfolioDetailHeader({
                       </div>
                       <div>
                         <p className={`text-xs sm:text-sm font-medium uppercase tracking-wide ${
-                          portfolio.visibility === 'private' ? 'text-gray-600' :
-                          portfolio.visibility === 'public' ? 'text-blue-600' :
+                          portfolio.visibility === 'PRIVATE' ? 'text-gray-600' :
+                          portfolio.visibility === 'PUBLIC' ? 'text-blue-600' :
                           'text-purple-600'
                         }`}>Visibility</p>
                         <p className={`text-sm sm:text-base font-bold ${
-                          portfolio.visibility === 'private' ? 'text-gray-900' :
-                          portfolio.visibility === 'public' ? 'text-blue-900' :
+                          portfolio.visibility === 'PRIVATE' ? 'text-gray-900' :
+                          portfolio.visibility === 'PUBLIC' ? 'text-blue-900' :
                           'text-purple-900'
                         }`}>{visibilityDetails.label}</p>
                       </div>

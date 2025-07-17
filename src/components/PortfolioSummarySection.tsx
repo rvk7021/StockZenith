@@ -25,7 +25,6 @@ export default function PortfolioSummarySection({ lots, cash }: { lots: Lot[]; c
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [period, setPeriod] = useState<'7d' | '1m' | '1y' | '5y' | 'all'>('all');
-  const periodDays = { '7d': 7, '1m': 30, '1y': 365, '5y': 1825, 'all': 0 };
 
   useEffect(() => {
     async function fetchPrices() {
@@ -50,6 +49,7 @@ export default function PortfolioSummarySection({ lots, cash }: { lots: Lot[]; c
         }
       } catch (err) {
         setError('Failed to fetch stock prices');
+        console.log(err)
       } finally {
         setLoading(false);
       }
@@ -91,12 +91,6 @@ export default function PortfolioSummarySection({ lots, cash }: { lots: Lot[]; c
     return colors[ticker.length % colors.length];
   };
 
-  function getDaysHeld(lots: Lot[]): number {
-    if (!lots.length) return 0;
-    const earliest = Math.min(...lots.map(lot => lot.date ? new Date(lot.date).getTime() : Date.now()));
-    const now = Date.now();
-    return Math.floor((now - earliest) / (1000 * 60 * 60 * 24));
-  }
 
   return (
     <div className="bg-white/80 backdrop-blur-sm rounded-xl overflow-hidden">

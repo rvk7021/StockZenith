@@ -4,7 +4,7 @@ const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-pro';
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent`;
 
-async function askGemini(portfolio: any, question: string) {
+async function askGemini(portfolio: unknown, question: string) {
   const prompt = `You are a financial assistant. Given the following portfolio, answer the user's question concisely and accurately.\n\nPortfolio:\n${JSON.stringify(portfolio, null, 2)}\n\nQuestion: ${question}\n\nAnswer:`;
   const res = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
     method: 'POST',
@@ -26,6 +26,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const answer = await askGemini(portfolio, question);
     return res.json({ answer });
   } catch (e) {
-    return res.status(500).json({ error: 'Failed to get answer', details: (e as any).message });
+    return res.status(500).json({ error: 'Failed to get answer', details: (e as unknown as Error).message });
   }
 }

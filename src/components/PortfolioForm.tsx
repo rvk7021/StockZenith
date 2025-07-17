@@ -6,7 +6,7 @@ export default function PortfolioForm({ initial, onClose }: { initial: Portfolio
   const [name, setName] = useState(initial?.name || '');
   const [visibility, setVisibility] = useState<Portfolio['visibility']>(initial?.visibility || 'PRIVATE');
   const [lots, setLots] = useState<Lot[]>(initial?.lots || []);
-  const [ticker, setTicker] = useState('');
+  const [, setTicker] = useState('');
   const [quantity, setQuantity] = useState<string>('');
   const [pricePaid, setPricePaid] = useState<string>('');
   const [date, setDate] = useState<string>('');
