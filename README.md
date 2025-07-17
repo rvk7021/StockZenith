@@ -4,6 +4,15 @@ A modern, full-stack portfolio management dashboard for tracking, analyzing, and
 
 **Now with a public portfolio explorer, public user list, and beautiful unified branding across all pages!**
 
+---
+
+## 🌐 Links
+
+- **GitHub Repository (Public):** [https://github.com/yourusername/stockzenith](https://github.com/yourusername/stockzenith)
+- **Deployed URL (Vercel):** [https://stockzenith.vercel.app](https://stockzenith.vercel.app)
+
+---
+
 ## 🚀 Features
 - **User Authentication**: Secure sign-in and registration with hashed passwords (NextAuth.js + Prisma).
 - **Portfolio Management**: Create, edit, and delete portfolios with multiple stock lots and cash positions.
@@ -17,14 +26,6 @@ A modern, full-stack portfolio management dashboard for tracking, analyzing, and
 - **Responsive UI**: Beautiful, mobile-friendly design with Tailwind CSS and custom components.
 - **Stock Price Fetching**: Real-time price updates for tracked tickers.
 - **Animated, User-Friendly Experience**: Smooth transitions and feedback for all actions.
-
-## 🛠️ Technologies Used
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS
-- **Backend**: Next.js API routes, Prisma ORM, bcryptjs
-- **Database**: Prisma (MongoDB, configurable)
-- **Authentication**: NextAuth.js (credentials provider)
-- **AI Integration**: Gemini API (Google Generative Language)
-- **Stock Price API**: Finnhub (or similar, requires `STOCK_API_KEY`)
 
 ## 🗂️ Project Structure (Detailed)
 
@@ -108,7 +109,7 @@ StockZenith/
 - **tsconfig.json**: TypeScript configuration file.
 - **README.md**: This documentation file.
 
-## 📦 Setup Instructions
+## 📦 How to Run Locally
 
 1. **Clone the repository**
    ```sh
@@ -140,15 +141,35 @@ StockZenith/
    ```
    Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📝 Challenges Faced
-- **Authentication Flow**: Balancing user experience (register vs. sign-in) with security and clear error handling.
-- **AI Integration**: Handling API limits, parsing and displaying AI responses in a user-friendly way.
-- **Real-Time Data**: Efficiently fetching and updating stock prices for multiple portfolios.
-- **Sharing & Access Control**: Securely generating, revoking, and tracking shared portfolio links.
-- **UI/UX**: Ensuring a smooth, animated, and accessible experience across devices.
-- **Public Explorer**: Designing a seamless, discoverable public portfolio and user browsing experience.
+---
 
-## 🌱 Possible Future Improvements
+## 💡 Prompt Design Explanation
+
+The AI-powered features in StockZenith are crafted with a focus on clarity, relevance, and user empowerment. Here’s how prompt design elevates the user experience:
+
+- **Conversational, Human-Centric Approach**: Prompts are written in natural, friendly language to make the AI feel approachable and helpful, encouraging users to ask questions about their portfolios without hesitation.
+- **Contextual Awareness**: Every AI prompt is dynamically generated based on the user’s actual portfolio data—holdings, cash, risk profile, and recent activity—so responses are always personalized and actionable.
+- **Guided Discovery**: The chatbot and insights panels suggest example questions and topics, helping users discover the full range of AI capabilities (e.g., “What’s my diversification risk?” or “Suggest ways to rebalance my portfolio”).
+- **Prompt Engineering for Clarity**: Prompts are engineered to request concise, jargon-free, and practical advice from the Gemini API, avoiding generic or overly technical responses. The AI is asked to summarize, explain, and recommend in plain English.
+- **Multi-Turn Interaction**: The chatbot supports follow-up questions and context retention, so users can dig deeper or clarify their needs without starting over.
+- **Feedback Loops**: User actions and feedback (e.g., “Was this answer helpful?”) can be used to refine future prompts and improve the AI’s usefulness over time.
+- **Transparency and Safety**: Prompts include reminders that AI advice is informational, not financial advice, and encourage users to verify important decisions independently.
+
+This thoughtful prompt design ensures that StockZenith’s AI features are not just technically advanced, but genuinely helpful, intuitive, and trustworthy for all users.
+
+---
+
+## ⚠️ Limitations & What’s Next
+
+### Current Limitations
+- **AI Limitations**: The quality of AI insights depends on the Gemini API and may not always be perfect or up-to-date.
+- **Stock Data**: Real-time stock prices are subject to API limits and may be delayed or incomplete.
+- **No Social Features**: No following, commenting, or messaging between users (yet).
+- **No Advanced Analytics**: Lacks deep historical analysis, charting, or risk metrics beyond basic summaries.
+- **No Mobile App**: Web-only, not a native mobile app.
+- **No Email/Push Notifications**: Users are not notified of portfolio changes or market events.
+
+### What’s Next / Future Improvements
 - **OAuth Providers**: Add Google, GitHub, or other social logins.
 - **Email Verification**: Require email confirmation for new accounts.
 - **Password Reset**: Add forgot/reset password functionality.
@@ -157,6 +178,9 @@ StockZenith/
 - **Multi-currency Support**: Track investments in different currencies.
 - **Better Mobile Experience**: Further optimize for mobile and tablet users.
 - **Unit Tests & CI**: Add automated testing and continuous integration.
+- **Social Features**: Following, commenting, and sharing between users.
+
+---
 
 ## 🤝 Contributing
 Pull requests and suggestions are welcome! Please open an issue or submit a PR.
