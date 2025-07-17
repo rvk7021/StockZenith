@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSession, signOut } from 'next-auth/react';
 import PortfolioForm from '../components/PortfolioForm';
 import PortfolioGrid from '../components/PortfolioGrid';
@@ -37,17 +37,13 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState<Portfolio | null>(null);
-  const [shareLink, setShareLink] = useState<string | null>(null);
-  const [shareLoading, setShareLoading] = useState(false);
-  const [shareError, setShareError] = useState('');
-  const shareInputRef = useRef<HTMLInputElement>(null);
-  const [analytics, setAnalytics] = useState<Analytics[]>([]);
-  const [analyticsLoading, setAnalyticsLoading] = useState(false);
-  const [analyticsError, setAnalyticsError] = useState('');
+  const [, setAnalytics] = useState<Analytics[]>([]);
+  const [, setAnalyticsLoading] = useState(false);
+  const [, setAnalyticsError] = useState('');
   const [portfolioError, setPortfolioError] = useState('');
   const [prices, setPrices] = useState<Record<string, number | null>>({});
-  const [pricesLoading, setPricesLoading] = useState(false);
-  const [pricesError, setPricesError] = useState('');
+  const [, setPricesLoading] = useState(false);
+  const [, setPricesError] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -82,7 +78,7 @@ export default function Dashboard() {
       .then(data => setPrices(data.prices || {}))
       .catch(e => setPricesError(e.message || 'Failed to fetch prices'))
       .finally(() => setPricesLoading(false));
-  }, [JSON.stringify(portfolios)]);
+  }, [portfolios]);
 
   async function fetchPortfolios() {
     setLoading(true);
@@ -110,6 +106,7 @@ export default function Dashboard() {
       setAnalytics(data.analytics || []);
     } catch (e) {
       setAnalyticsError('Failed to load analytics');
+      console.error(e);
     }
     setAnalyticsLoading(false);
   }
@@ -119,39 +116,11 @@ export default function Dashboard() {
     setShowForm(true);
   }
 
-  function handleEdit(p: Portfolio) {
-    setEditing(p);
-    setShowForm(true);
-  }
 
-  async function handleDelete(id: string) {
-    if (!confirm('Delete this portfolio?')) return;
-    await fetch('/api/portfolio', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
-    fetchPortfolios();
-  }
 
-  async function handleShare(p: Portfolio) {
-    setShareLoading(true);
-    setShareError('');
-    setShareLink(null);
-    try {
-      const res = await fetch('/api/share', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ portfolioId: p.id }),
-      });
-      const data = await res.json();
-      if (data.link) setShareLink(data.link);
-      else setShareError(data.error || 'Failed to generate link');
-    } catch (e) {
-      setShareError('Failed to generate link');
-    }
-    setShareLoading(false);
-  }
+
+
+
 
   if (status === 'loading') {
     return (

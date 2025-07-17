@@ -78,6 +78,7 @@ export default function ChatbotSection({ portfolio, messages: externalMessages, 
         isUser: false,
         timestamp: new Date()
       }]);
+      console.error(error);
     } finally {
       setIsTyping(false);
     }

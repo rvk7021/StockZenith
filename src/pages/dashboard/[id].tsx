@@ -76,7 +76,7 @@ function renderInsightSection(section: string | string[] | Record<string, unknow
     // Try to extract up to 5 descriptive values (skip keys like 'title', 'type', etc.)
     const values = Object.entries(section)
       .filter(([key]) => !['title', 'type', 'status'].includes(key.toLowerCase()))
-      .map(([key, value]) => {
+      .map(([, value]) => {
         if (typeof value === 'string') return value;
         if (Array.isArray(value)) return value.map(v => typeof v === 'string' ? v : JSON.stringify(v)).join(', ');
         return JSON.stringify(value);
@@ -115,9 +115,6 @@ export default function DashboardPortfolioDetail() {
   const [aiInsights, setAiInsights] = useState<AIInsights | string>('');
   const [aiInsightsLoading, setAiInsightsLoading] = useState(false);
   const [aiInsightsError, setAiInsightsError] = useState('');
-  const [chatInput, ] = useState('');
-  const [, setChatLoading] = useState(false);
-  const [, setChatError] = useState('');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   // Add state for hiding the share link after copy
@@ -161,6 +158,7 @@ export default function DashboardPortfolioDetail() {
       }
     } catch (e) {
       setError('Failed to load portfolio');
+      console.error(e);
     }
     setLoading(false);
   }
@@ -174,6 +172,7 @@ export default function DashboardPortfolioDetail() {
       setAnalytics(data.analytics || []);
     } catch (e) {
       setAnalyticsError('Failed to load analytics');
+      console.error(e);
     }
     setAnalyticsLoading(false);
   }
@@ -191,42 +190,11 @@ export default function DashboardPortfolioDetail() {
       setAiInsights(data);
     } catch (e) {
       setAiInsightsError('Failed to load AI insights');
+      console.error(e);
     }
     setAiInsightsLoading(false);
   }
 
-  async function handleChatSend(e: React.FormEvent) {
-    e.preventDefault();
-    if (!chatInput.trim()) return;
-    setChatLoading(true);
-    setChatError('');
-    try {
-      const res = await fetch('/api/insights-chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ portfolioId: id, messages: [{ role: 'user', content: chatInput }] }),
-      });
-      const data = await res.json();
-      if (data.reply) {
-        // setChatMessages([...chatMessages, { role: 'assistant', content: data.reply }]); // Removed as per edit hint
-      } else {
-        setChatError(data.error || 'No reply from AI');
-      }
-    } catch (e) {
-      setChatError('Failed to send message');
-    }
-    setChatLoading(false);
-  }
-
-  async function handleDelete() {
-    if (!confirm('Delete this portfolio?')) return;
-    await fetch('/api/portfolio', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id }),
-    });
-    router.replace('/dashboard');
-  }
 
   async function handleShare() {
     setShareLoading(true);
@@ -243,6 +211,7 @@ export default function DashboardPortfolioDetail() {
       else setShareError(data.error || 'Failed to generate link');
     } catch (e) {
       setShareError('Failed to generate link');
+      console.error(e);
     }
     setShareLoading(false);
   }
@@ -282,6 +251,7 @@ export default function DashboardPortfolioDetail() {
       await fetchAnalytics();
     } catch (err) {
       alert('Network error while revoking link');
+      console.error(err);
     }
   }
 
