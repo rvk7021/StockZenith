@@ -25,8 +25,8 @@ export default function HoldingsSection({ lots }: { lots: Lot[] }) {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [expanded, setExpanded] = useState<Record<string, boolean>>({});
     const [prices, setPrices] = useState<Record<string, number | null>>({});
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string>('');
+    const [, setLoading] = useState<boolean>(true);
+    const [, setError] = useState<string>('');
     const itemsPerPage = 10;
 
     useEffect(() => {
@@ -133,9 +133,6 @@ export default function HoldingsSection({ lots }: { lots: Lot[] }) {
                                 const avgPrice = data.totalCost / data.totalQty;
                                 const curPrice = prices[ticker] || 0;
                                 const value = data.totalQty * curPrice;
-                                const cost = data.totalCost;
-                                const pl = value - cost;
-                                const plPct = cost > 0 ? (pl / cost) * 100 : 0;
                                 const daysHeld = getDaysHeld(data.lots);
                                 return (
                                     <div key={startIndex + i} className="bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
