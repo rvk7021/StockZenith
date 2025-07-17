@@ -1,3 +1,7 @@
+[![Deployed on Vercel](https://img.shields.io/badge/Live%20App-StockZenith-blue?style=for-the-badge&logo=vercel)](https://stock-zenith.vercel.app)
+
+**Live App:** https://stock-zenith.vercel.app
+
 # StockZenith Portfolio Dashboard
 
 A modern, full-stack portfolio management dashboard for tracking, analyzing, and sharing investment portfolios. Built with Next.js, React, Prisma, and Tailwind CSS.
