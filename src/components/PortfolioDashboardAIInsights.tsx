@@ -65,7 +65,7 @@ const PortfolioDashboardAIInsights: React.FC<{ portfolios: Portfolio[] }> = ({ p
       .then((data) => setInsights(data))
       .catch((e) => setError(e.message || 'Failed to fetch insights'))
       .finally(() => setLoading(false));
-  }, [JSON.stringify(combinedPortfolio)]);
+  }, [combinedPortfolio]);
 
   if (!portfolios || portfolios.length === 0) return null;
 

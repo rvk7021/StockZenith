@@ -35,6 +35,7 @@ prisma/migrations/
 
 # TypeScript
 *.tsbuildinfo
+next-env.d.ts
 
 # Coverage
 coverage/
@@ -55,3 +56,20 @@ out/
 
 # Optional stylelint cache
 .stylelintcache
+
+# Yarn Plug'n'Play
+.pnp
+.pnp.*
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Vercel
+.vercel
+
+# Generated Prisma client (if used)
+src/generated/prisma
