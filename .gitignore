@@ -73,3 +73,6 @@ out/
 
 # Generated Prisma client (if used)
 src/generated/prisma
+
+# Ignore Prisma generated files
+src/generated/
