@@ -1,5 +1,6 @@
 {
-  "name": "pixelwand",
+  "name": "stockzenith",
+  "description": "StockZenith: A modern, AI-powered portfolio management dashboard for tracking, analyzing, and sharing investment portfolios.",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,17 +10,30 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^6.12.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@types/next-auth": "^3.13.0",
+    "axios": "^1.10.0",
+    "bcryptjs": "^3.0.2",
+    "lucide-react": "^0.525.0",
+    "nanoid": "^5.1.5",
+    "next": "15.4.1",
+    "next-auth": "^4.24.11",
+    "node-fetch": "^3.3.2",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.4.1"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9",
     "eslint-config-next": "15.4.1",
-    "@eslint/eslintrc": "^3"
+    "postcss": "^8.5.6",
+    "prisma": "^6.12.0",
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5"
   }
 }
