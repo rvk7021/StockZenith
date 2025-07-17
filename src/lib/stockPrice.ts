@@ -7,15 +7,29 @@ const BASE_URL = 'https://finnhub.io/api/v1';
 const priceCache: Record<string, { price: number | null; ts: number }> = {};
 const CACHE_TTL = 60 * 1000; // 1 minute
 
+type FinnhubQuote = { c?: number; error?: string; s?: string };
+
 async function fetchFinnhubQuote(ticker: string): Promise<number | null> {
   const url = `${BASE_URL}/quote?symbol=${ticker}&token=${API_KEY}`;
   const res = await fetch(url);
-  const data = await res.json();
-  if (typeof data.c === 'number' && !isNaN(data.c)) {
-    return data.c;
+  const data: unknown = await res.json();
+  if (
+    data &&
+    typeof data === 'object' &&
+    data !== null &&
+    'c' in data &&
+    typeof (data as FinnhubQuote).c === 'number' &&
+    !isNaN((data as FinnhubQuote).c!)
+  ) {
+    return (data as FinnhubQuote).c!;
   }
   // Check for rate limit or error
-  if (data.error || data.s === 'no_data') return null;
+  if (
+    data &&
+    typeof data === 'object' &&
+    ((data as FinnhubQuote).error || (data as FinnhubQuote).s === 'no_data')
+  )
+    return null;
   return null;
 }
 
